@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.github.e-commerce-mall</groupId>
+    <artifactId>e-commerce-mall</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>e-commerce-mall</name>
+    <description>e-commerce-mall</description>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>e-commerce-mall-coupon</module>
+        <module>e-commerce-mall-member</module>
+        <module>e-commerce-mall-order</module>
+        <module>e-commerce-mall-product</module>
+        <module>e-commerce-mall-ware</module>
+    </modules>
+
+</project>
