@@ -16,6 +16,8 @@
         <module>e-commerce-mall-order</module>
         <module>e-commerce-mall-product</module>
         <module>e-commerce-mall-ware</module>
+        <module>e-commerce-mall-common</module>
+        <module>e-commerce-mall-gateway</module>
     </modules>
 
 </project>
