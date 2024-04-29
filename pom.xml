@@ -18,6 +18,8 @@
         <module>e-commerce-mall-ware</module>
         <module>e-commerce-mall-common</module>
         <module>e-commerce-mall-gateway</module>
+        <module>renren-fast</module>
+        <module>renren-generator</module>
     </modules>
 
 </project>
