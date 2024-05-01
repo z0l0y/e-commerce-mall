@@ -1,5 +1,7 @@
 package com.github.ecommercemall.ecommercemallproduct.service.impl;
 
+import com.github.ecommercemall.ecommercemallproduct.service.CategoryBrandRelationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -14,12 +16,16 @@ import com.github.common.utils.Query;
 import com.github.ecommercemall.ecommercemallproduct.dao.CategoryDao;
 import com.github.ecommercemall.ecommercemallproduct.entity.CategoryEntity;
 import com.github.ecommercemall.ecommercemallproduct.service.CategoryService;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.xml.ws.soap.Addressing;
 
 
 @Service("categoryService")
 public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity> implements CategoryService {
+
+    @Autowired
+    private CategoryBrandRelationService categoryBrandRelationService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -56,10 +62,44 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         return level1Menus;
     }
 
+    // [2,255,21]
+    // 有一说一,如果找不到BUG是怎么来的,建议用断点一个一个看
+    @Override
+    public Long[] findCatelogPath(Long catelogId) {
+        List<Long> paths = new ArrayList<>();
+        List<Long> parentPath = findParentPath(catelogId, paths);
+        Collections.reverse(parentPath);
+        return parentPath.toArray(new Long[parentPath.size()]);
+    }
+
+    /**
+     * 级联更新数据
+     *
+     * @param category
+     */
+    @Transactional
+    @Override
+    public void updateCascade(CategoryEntity category) {
+        this.updateById(category);
+        categoryBrandRelationService.updateCategory(category.getCatId(), category.getName());
+
+    }
+
+    private List<Long> findParentPath(Long catelogId, List<Long> paths) {
+        // 1.搜集当前节点的ID
+        paths.add(catelogId);
+        CategoryEntity byId = this.getById(catelogId);
+        // 通过递归来查找
+        if (byId.getParentCid() != 0) {
+            findParentPath(byId.getParentCid(), paths);
+        }
+        return paths;
+    }
+
     // 递归查找所有菜单的子菜单
     // 这边理解的话我们可以用树的角度来理解
     private List<CategoryEntity> getChildren(CategoryEntity root, List<CategoryEntity> all) {
-        List<CategoryEntity> children = all.stream()
+        return all.stream()
                 // 过滤，将all中所有的实体类的ID和我们传递的item的ID进行比对，留下ID相等的实体类
                 .filter(categoryEntity -> Objects.equals(categoryEntity.getParentCid(), root.getCatId()))
                 // 找到子菜单
@@ -69,7 +109,6 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
                 .sorted(Comparator.comparingInt(menu -> (menu.getSort() == null ? 0 : menu.getSort())))
                 // 将最后获取到的流封装成一个list
                 .collect(Collectors.toList());
-        return children;
     }
 
 }

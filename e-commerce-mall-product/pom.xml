@@ -39,12 +39,14 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!--        有点难以评价，非要导个mybatis-plus-extension才行，但是不是已经导了mybatis-plus的依赖了吗-->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-extension</artifactId>
-            <version>3.5.3.1</version>
+            <version>3.2.0</version>
             <scope>compile</scope>
         </dependency>
+
 
     </dependencies>
     <dependencyManagement>
