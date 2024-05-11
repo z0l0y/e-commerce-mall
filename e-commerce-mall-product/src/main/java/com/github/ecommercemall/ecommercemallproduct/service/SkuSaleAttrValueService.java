@@ -2,8 +2,10 @@ package com.github.ecommercemall.ecommercemallproduct.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.common.utils.PageUtils;
+import com.github.ecommercemall.ecommercemallproduct.entity.ProductAttrValueEntity;
 import com.github.ecommercemall.ecommercemallproduct.entity.SkuSaleAttrValueEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +18,6 @@ import java.util.Map;
 public interface SkuSaleAttrValueService extends IService<SkuSaleAttrValueEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
 }
 
