@@ -71,7 +71,7 @@
             </exclusions>
         </dependency>
 
-<!--        lettuce在高并发的时候会出现堆外内存溢出情况的Bug，所以这里改用jedis来作为我们redis的客户端-->
+        <!--        lettuce在高并发的时候会出现堆外内存溢出情况的Bug，所以这里改用jedis来作为我们redis的客户端-->
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
@@ -82,6 +82,13 @@
             <groupId>org.redisson</groupId>
             <artifactId>redisson</artifactId>
             <version>3.12.0</version>
+        </dependency>
+
+        <!--        使用缓存场景，其中缓存的自动配置我们可以在CacheAutoConfiguration中的RedisCacheConfiguration
+        主要帮助我们自动配置了，缓存管理器cacheManager-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
 
 
